@@ -1,0 +1,75 @@
+Skenario Menyukai Film:
+
+- Film belum disukai.
+- Widget untuk menyukai film ditampilkan
+- Widget menyukai film ditekan oleh pengguna.
+- Film ditambahkan ke daftar film yang disukai:
+- Ternyata film sudah disukai:
+- Tidak perlu menyimpan kembali.
+- Data film tidak memiliki ID:
+- Sistem tidak memproses penyimpanan.
+- SIstem tidak gagal.
+- Skenario Batal Menyukai Film:
+
+Film sudah disukai.
+- Widget untuk batal menyukai film ditampilkan.
+- Widget pembatalan ditekan oleh pengguna.
+- Film dihapus dari daftar film yang disukai:
+- Ternyata film tidak ada dalam daftar film yang disukai.
+
+TODO:
+
+- Memberi nama yang lebih berbeda untuk createLikeButtonTemplate dan createLikedButtonTemplate.
+  alur: 
+  a. mengubah xit menjadi it di likeMovieSpec (terjadi error)
+  b. solving point a seperti point 1 yang dibawah. dengan melakukan pengecekan keberadaan id pada method putMovie dan getMovie pada favorite-movie-idb.js
+
+
+- Alur negatif menyimpan movie tanpa ID tidak boleh menyebabkan kegagalan.
+
+
+setelah testing diatas berhasil semua, tahapan selanjutnya yaitu memperbaiki bug dengan cara:
+1. memeriksa keberadaan ID sebelum disimpan, hal itu dapat dilakukan dengan memeriksa keberadaan ID yang paling dekat dengan proses penyimpanan (FavoriteMovieIdb) --> dimodul TODO harus dikerjakan
+
+2. merapikan kode pada tes, dengan membuat file testFactories.js, tujuannya untuk mengurangi duplikat kode pada inisiasi LikeButtonInitiator yang terdapat di likeMovieSpen.js dan ulikeMovieSpec.js
+  a. didalam testFactories membuat fungsinya sama seperti LikeButtonInitiator, dengan tujuan mengurangi duplikasi kode 
+  b. mengganti semua initiasi LikeButtonInitiator di likeMovieSpen.js dan ulikeMovieSpec.js menjadi 
+
+  "await TestFactories.createLikeButtonPresenterWithMovie({ id: 1 });
+  "
+
+3. selanjutnya mengubah nama yang lebih sederhana. perubahan yang dilakukan meliputi:
+  a. perubahan nama file:
+    - like-button-initiator diganti menjadi like-button-presenter.js dan mengganti nama method LikeButtonInitiator menjadi LikeButtonPresenter.
+      => impact pages/detail.js (ganti nama file import dan penggunaan method yang awalnya LikeButtonInitiator menjadi LikeButtonPresenter)
+    
+  b. perubahan nama method:
+    - template-creator.js yang kena impact di template-creator.js da  like-button-presenter.js
+      => mengganti createLikeButtonTemplate menjadi createLikeMovieButtonTemplate
+      => createLikedButtonTemplate menjadi createUnlikeMovieButtonTemplate
+   
+
+
+//////////////////////////////////////////////
+modul 3 kolaborasi >> membuat LikeButtonPresenter dapat menerima semua object dan dapat menyukai film
+
+1. membuat berkas favoriteMovieContract.js 
+2. membuat berkas specs/favoriteMovieIdbSpec.js
+3. penambahan parameter dan modifikasi di berkas like-button-presenter.js
+  a. menambahkan parameter favoriteMovies dan this._favoriteMovies = favoriteMovies; dengan tujuan agar like-button-presenter tidak bergantung lagi dengan favoriteMovieIdb namun bergantung ke testFactories.
+  b. menambahkan parameter ke berkas yang bergantung dengan like-button-presenter.js. dengan menambahkan 
+
+      favoriteMovies: FavoriteMovieIdb
+
+  diberkas testFactories dan detail.js (kalo belum ditambahkan parameter diatas akan muncul error ketika method getMovie dijalankan)
+
+
+  ////////////////////////////////////////////////
+  mocul 4: mencari film yang disukai
+  1. membuat berkas  src/scripts/views/pages/liked-movies/favorite-movie-search-presenter.js, 
+
+
+
+
+== belum solved ==
+  error saat pengujian pemanggilan searchMovies di favoriteMovieSearchSpec.js pada modul membangun fitur menggunakan TDD
